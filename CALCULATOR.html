@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TASK 2 Calculator</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(145deg, #4b5563, #374151);
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    p {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .calculator {
+      background: white;
+      border-radius: 25px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .display {
+      background: linear-gradient(to bottom, #d1d5db, #9ca3af);
+      color: black;
+      font-size: 2rem;
+      text-align: right;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      height: 60px;
+      pointer-events: none;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      grid-gap: 12px;
+      justify-content: center;
+    }
+
+    .buttons button {
+      height: 60px;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .buttons button:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-clear, .btn-delete {
+      background-color: #fca5a5;
+      color: white;
+    }
+
+    .btn-operator {
+      background-color: #60a5fa;
+      color: white;
+    }
+
+    .btn-equals {
+      background-color: #22c55e;
+      color: white;
+    }
+
+    .btn-number {
+      background-color: #f9fafb;
+      color: black;
+    }
+
+    .btn-zero {
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TASK 2 Calculator</h1>
+
+
+  <div class="calculator">
+    <input type="text" id="display" class="display" disabled />
+
+    <div class="buttons">
+      <button class="btn-clear" onclick="clearDisplay()">C</button>
+      <button class="btn-delete" onclick="deleteLast()">⌫</button>
+      <button class="btn-operator" onclick="appendValue('/')">/</button>
+      <button class="btn-operator" onclick="appendValue('*')">×</button>
+
+      <button class="btn-number" onclick="appendValue('7')">7</button>
+      <button class="btn-number" onclick="appendValue('8')">8</button>
+      <button class="btn-number" onclick="appendValue('9')">9</button>
+      <button class="btn-operator" onclick="appendValue('-')">−</button>
+
+      <button class="btn-number" onclick="appendValue('4')">4</button>
+      <button class="btn-number" onclick="appendValue('5')">5</button>
+      <button class="btn-number" onclick="appendValue('6')">6</button>
+      <button class="btn-operator" onclick="appendValue('+')">+</button>
+
+      <button class="btn-number" onclick="appendValue('1')">1</button>
+      <button class="btn-number" onclick="appendValue('2')">2</button>
+      <button class="btn-number" onclick="appendValue('3')">3</button>
+      <button class="btn-equals" onclick="calculateResult()">=</button>
+
+      <button class="btn-number btn-zero" onclick="appendValue('0')">0</button>
+      <button class="btn-number" onclick="appendValue('.')">.</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function appendValue(val) {
+      const lastChar = display.value.slice(-1);
+      if ("+-*/".includes(val) && display.value === '') return;
+      if ("+-*/".includes(val) && "+-*/".includes(lastChar)) {
+        display.value = display.value.slice(0, -1) + val;
+        return;
+      }
+      display.value += val;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculateResult() {
+      try {
+        const result = eval(display.value);
+        display.value = result;
+      } catch {
+        display.value = 'Error';
+      }
+    }
+  </script>
+
+</body>
+</html>
